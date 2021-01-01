@@ -31,7 +31,7 @@ public class MaxMinTemperatureDriver extends Configured implements Tool {
     job.setReducerClass(MaxMinTemperatureReducer.class);
 
     job.setOutputKeyClass(Text.class);
-    job.setOutputValueClass(IntWritable.class);
+    job.setOutputValueClass(TempAndQuality.class);
     
     return job.waitForCompletion(true) ? 0 : 1;
   }

@@ -39,6 +39,11 @@ public class NcdcRecordParser {
   public String getYearAndQuality(){
    return "Year: "+year+" with quality code: "+quality;
   }
+  
+  public String getQuality(){
+  	return this.quality;
+  }
+  
   public int getAirTemperature() {
     return airTemperature;
   }

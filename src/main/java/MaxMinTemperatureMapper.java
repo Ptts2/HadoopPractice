@@ -8,7 +8,7 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
 public class MaxMinTemperatureMapper
-    extends Mapper<LongWritable, Text, Text, IntWritable> {
+    extends Mapper<LongWritable, Text, Text, TempAndQuality> {
 
   private NcdcRecordParser parser = new NcdcRecordParser();
 
@@ -18,8 +18,8 @@ public class MaxMinTemperatureMapper
 
     parser.parse(value);
     if (parser.isValidTemperature()) {
-      context.write(new Text(parser.getYearAndQuality()),
-          new IntWritable(parser.getAirTemperature()));
+      context.write(new Text(parser.getYear()),
+          new TempAndQuality(parser.getAirTemperature(), parser.getQuality()));
     }
   }
 }

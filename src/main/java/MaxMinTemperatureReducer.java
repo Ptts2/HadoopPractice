@@ -5,11 +5,12 @@ import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
+
 public class MaxMinTemperatureReducer
-  extends Reducer<Text, IntWritable, Text, IntWritable> {
+  extends Reducer<Text, TempAndQuality, Text, TempAndQuality> {
 
   @Override
-  public void reduce(Text key, Iterable<IntWritable> values,
+  public void reduce(Text key, Iterable<TempAndQuality> values,
       Context context)
       throws IOException, InterruptedException {
     
@@ -20,32 +21,43 @@ public class MaxMinTemperatureReducer
     int minValueGQ = Integer.MAX_VALUE;
     
     int maxValueNQ = Integer.MIN_VALUE;
-    int maxValueNQ = Integer.MAX_VALUE;
+    int minValueNQ = Integer.MAX_VALUE;
     
-    String quality = key.toString.substring(30);
-    String year = key.toString.substring(0,4);
-    for (IntWritable value : values) {
+    for (TempAndQuality value : values) {
       
-      if(quality.matches(1)){
-      	maxValueQ1 = Math.max(maxValueQ1, value.get());
-      	minValueQ1 = Math.min(minValueQ1, value.get());
+      String quality = value.getQuality().toString();
+      String tmp = value.getAirTemperature().toString();
+      
+      if(isNumeric(quality) && isNumeric(tmp)){
+      	int temp = Integer.parseInt(tmp);
+      
+      	if(quality.equals("1")){
+      		maxValueQ1 = Math.max(maxValueQ1, temp);
+      		minValueQ1 = Math.min(minValueQ1, temp);
+      	}
+      
+      	if( quality.matches("[01459]") ){
+      		maxValueGQ = Math.max(maxValueGQ, temp);
+      		minValueGQ = Math.min(minValueGQ, temp);
+      	}
+      
+      	maxValueNQ = Math.max(maxValueNQ, temp);
+      	minValueNQ = Math.min(minValueNQ, temp);
       }
-      
-      if(quality.matches([01459])){
-      	maxValueGQ = Math.max(maxValueGQ, value.get());
-      	minValueGQ = Math.min(minValueGQ, value.get());
-      }
-      
-      maxValueNQ = Math.max(maxValueNQ, value.get());
-      minValueNQ = Math.min(minValueNQ, value.get());
       
     }
     
-    //Join all the temperatures in a string
-    
-    String solution = "Max Temperature with quality 1: "+String.valueOf(maxValueQ1)+"\nMin Temperature with quality 1: "+String.valueOf(minValueQ1)+"\nMax Temperature with quality in [01459]: "+String.valueOf(maxValueGQ)+"\nMin Temperature with quality in [01459]: "+String.valueOf(minValueGQ)+"\nMax Temperature without having quality into account: "+String.valueOf(maxValueNQ)+"\nMin Temperature without having quality into account: "+String.valueOf(minValueNQ);
-    
-    context.write(new Text(year), new Text(solution));
+    context.write(key, new TempAndQuality(maxValueQ1, minValueQ1, maxValueGQ, minValueGQ, maxValueNQ, minValueNQ));
+  }
+  
+  public static boolean isNumeric(String str)  {  
+  	try  {  
+    	int d = Integer.parseInt(str);  
+  	}  
+  	catch(NumberFormatException e)  {  
+    		return false;  
+  	}	  
+  	return true;  
   }
 }
 
