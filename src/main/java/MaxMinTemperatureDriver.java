@@ -20,14 +20,13 @@ public class MaxMinTemperatureDriver extends Configured implements Tool {
       return -1;
     }
     
-    Job job = new Job(getConf(), "Max temperature");
+    Job job = new Job(getConf(), "MaxMin temperature");
     job.setJarByClass(getClass());
 
     FileInputFormat.addInputPath(job, new Path(args[0]));
     FileOutputFormat.setOutputPath(job, new Path(args[1]));
     
     job.setMapperClass(MaxMinTemperatureMapper.class);
-    job.setCombinerClass(MaxMinTemperatureReducer.class);
     job.setReducerClass(MaxMinTemperatureReducer.class);
 
     job.setOutputKeyClass(Text.class);

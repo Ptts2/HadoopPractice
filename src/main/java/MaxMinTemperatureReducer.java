@@ -27,7 +27,7 @@ public class MaxMinTemperatureReducer
       
       String quality = value.getQuality().toString();
       String tmp = value.getAirTemperature().toString();
-      
+       
       if(isNumeric(quality) && isNumeric(tmp)){
       	int temp = Integer.parseInt(tmp);
       
@@ -47,12 +47,13 @@ public class MaxMinTemperatureReducer
       
     }
     
+    
     context.write(key, new TempAndQuality(maxValueQ1, minValueQ1, maxValueGQ, minValueGQ, maxValueNQ, minValueNQ));
   }
   
   public static boolean isNumeric(String str)  {  
   	try  {  
-    	int d = Integer.parseInt(str);  
+    	int n = Integer.parseInt(str);  
   	}  
   	catch(NumberFormatException e)  {  
     		return false;  

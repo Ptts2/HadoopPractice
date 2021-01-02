@@ -73,6 +73,7 @@ public class TempAndQuality implements WritableComparable<TempAndQuality> {
 		
 		this.airTemperature = new Text();
 		this.quality = new Text();
+		
 	}
 	
 	public Text getAirTemperature(){

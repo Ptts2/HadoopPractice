@@ -29,19 +29,19 @@ public class NcdcRecordParser {
   }
 
   public boolean isValidTemperature() {
-    return (airTemperature != MISSING_TEMPERATURE) && (airTemperature > LOWEST_TEMP) &&  (airTemperature < HIGHEST_TEMP);
+    return (airTemperature != MISSING_TEMPERATURE) && ((airTemperature/10) > LOWEST_TEMP) &&  ((airTemperature/10) < HIGHEST_TEMP);
   }
   
   public String getYear() {
     return year;
   }
-
-  public String getYearAndQuality(){
-   return "Year: "+year+" with quality code: "+quality;
-  }
   
   public String getQuality(){
   	return this.quality;
+  }
+  
+  public double getRealAirTemperature(){
+  	return this.airTemperature/10;
   }
   
   public int getAirTemperature() {
