@@ -1,4 +1,4 @@
-//MaxTemperatureReducer Reducer for maximum temperature example
+//MaxMinTemperatureReducer
 import java.io.IOException;
 
 import org.apache.hadoop.io.IntWritable;

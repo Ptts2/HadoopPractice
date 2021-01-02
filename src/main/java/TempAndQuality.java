@@ -128,7 +128,7 @@ public class TempAndQuality implements WritableComparable<TempAndQuality> {
 	@Override
 	public void write(DataOutput out) throws IOException {
 	   
-	    	airTemperature.write(out);
+	    airTemperature.write(out);
 		quality.write(out);
 		
 		maxTempQ1.write(out);

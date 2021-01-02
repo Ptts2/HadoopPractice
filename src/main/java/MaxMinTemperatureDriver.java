@@ -1,4 +1,4 @@
-//MaxTemperatureDriver Application to find the maximum temperature
+//MaxMinTemperatureDriver
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;

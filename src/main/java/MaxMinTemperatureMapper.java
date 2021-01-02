@@ -1,4 +1,4 @@
-// MaxTemperatureMapper A Mapper that uses a utility class to parse records
+// MaxMinTemperatureMapper
 
 import java.io.IOException;
 
