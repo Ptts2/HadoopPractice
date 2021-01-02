@@ -151,10 +151,31 @@ public class TempAndQuality implements WritableComparable<TempAndQuality> {
 	    
 	}
 	
+	public double getMean(){
+
+		
+		return ((getDoubleOf(maxTempQ1)/10) + (getDoubleOf(minTempQ1)/10) + (getDoubleOf(maxTempGQ)/10) + (getDoubleOf(minTempGQ)/10) + (getDoubleOf(maxTempNQ)/10) + (getDoubleOf(minTempNQ)/10) )/6;
+	
+	}
+	
+	public double getDoubleOf(Text d){
+	
+		return Double.valueOf(d.toString());
+	
+	}
+	
 	@Override
 	public String toString(){
 	
-	return "\nMax Temperature with quality 1: "+maxTempQ1.toString()+"\nMin Temperature with quality 1: "+minTempQ1.toString()+"\nMax Temperature with quality in [01459]: "+maxTempGQ.toString()+"\nMin Temperature with quality in [01459]: "+minTempGQ.toString()+"\nMax Temperature without having quality into account: "+maxTempNQ.toString()+"\nMin Temperature without having quality into account: "+minTempNQ.toString()+"\n";	
+	String MtQ1 = "\nMax Temperature with quality 1: "+(getDoubleOf(maxTempQ1)/10)+"ºC";
+	String mtQ1 = "\nMin Temperature with quality 1: "+(getDoubleOf(minTempQ1)/10)+"ºC";
+	String MtGQ = "\nMax Temperature with quality in [01459]: "+(getDoubleOf(maxTempGQ)/10)+"ºC";
+	String mtGQ = "\nMin Temperature with quality in [01459]: "+(getDoubleOf(minTempGQ)/10)+"ºC";
+	String MtNQ = "\nMax Temperature without having quality into account: "+(getDoubleOf(maxTempNQ)/10)+"ºC";
+	String mtNQ = "\nMin Temperature without having quality into account: "+(getDoubleOf(minTempNQ)/10)+"ºC";
+	String mean = "\nMEAN TEMPERATURE IS: "+String.format("%.2f", getMean())+"ºC\n";
+	
+	return MtQ1+mtQ1+MtGQ+mtGQ+MtNQ+mtNQ+mean;
 	
 	
 	}	
